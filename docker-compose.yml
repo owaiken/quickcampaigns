@@ -1,0 +1,14 @@
+services:
+  social-app:
+    image: ubongpr7/q_campaign_f:latest
+    container_name: q_campaign_frontend
+    ports:
+      - "3000:3000"  
+    environment:
+      - NODE_ENV=development 
+    volumes:
+      - .:/app               
+      - /app/node_modules    
+    command: ["yarn", "dev"] 
+    restart: unless-stopped
+

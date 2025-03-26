@@ -1,0 +1,26 @@
+{
+  "name": "speedycompaign",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.2",
+    "axios": "^1.7.9",
+    "formik": "^2.4.6",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-google-recaptcha": "^3.1.0",
+    "react-select": "^5.10.0",
+    "react-toastify": "^11.0.3",
+    "uuid": "^11.0.5",
+    "yup": "^1.6.1"
+  }
+}
