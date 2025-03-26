@@ -202,7 +202,7 @@ const CampaignForm = ({
 
           <div className={styles.buttonContainer}>
             <button type="submit" className={styles.createAdButton}>
-              {isNewCampaign ? "Create Campaign" : "Create Ad Set"}
+              {isNewCampaign ? "Create Campaign" : "Create Campaign"}
             </button>
             <button
               type="button"

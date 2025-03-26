@@ -710,18 +710,7 @@ const ConfigForm = ({
                 label="Audience Network"
                 sx={{ "& .MuiFormControlLabel-label": { color: "#1E1E1E" } }}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={config.platforms.messenger}
-                    onChange={handlePlatformChange}
-                    name="messenger"
-                    sx={{ "&.Mui-checked": { "& .MuiSvgIcon-root": { color: "#5356FF" } } }}
-                  />
-                }
-                label="Messenger"
-                sx={{ "& .MuiFormControlLabel-label": { color: "#1E1E1E" } }}
-              />
+              
             </div>
             <hr className={styles.sectionDivider2} />
             <div className={`${styles.manualOptions} ${config.placement_type === "advantage_plus" ? styles.disabled : ""}`}>
@@ -869,18 +858,7 @@ const ConfigForm = ({
                 label="Audience Network Rewarded Videos"
                 sx={{ "& .MuiFormControlLabel-label": { color: "#1E1E1E" } }}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={config.placements.messenger_inbox}
-                    onChange={handlePlacementChange}
-                    name="messenger_inbox"
-                    sx={{ "&.Mui-checked": { "& .MuiSvgIcon-root": { color: "#5356FF" } } }}
-                  />
-                }
-                label="Messenger Inbox"
-                sx={{ "& .MuiFormControlLabel-label": { color: "#1E1E1E" } }}
-              />
+             
             </div>
           </div>
         )}
