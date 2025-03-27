@@ -1,6 +1,6 @@
 "use client"
 import Header from '@/Components/Header/Header'
-import Sidebar from '@/Components/Sidebar/Sidebar'
+import Sidebar from '@/Components/StickySide/StickySide'
 import React from 'react'
 import "/public/Styles/Pricing.css"
 import "/public/Styles/side-menu.css"
