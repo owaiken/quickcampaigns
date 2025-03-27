@@ -202,9 +202,11 @@ const CampaignForm = ({
           </div>
 
           <div className={styles.buttonContainer}>
+            <Link href='/loading'>
             <button type="submit" className={styles.createAdButton}>
               {isNewCampaign ? "Create Campaign" : "Create Campaign"}
             </button>
+            </Link>
             <button
               type="button"
               className={styles.goBackButton}
