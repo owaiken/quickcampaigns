@@ -2,17 +2,20 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import styles from "./MainStyles.module.css"; 
+import styles from "./MainStyles.module.css";
 import NavBar from "@/Components/NavBar/NavBar";
 import StickySide from "@/Components/StickySide/StickySide";
-import '/public/Styles/fonts.css'
+import SetupAdAccountModal from "@/Components/Modals/SetupAdAccountModal";
+import "/public/Styles/fonts.css";
 
-const Page = ({ activeAccount, setActiveAccount }) => {
+const Page = () => {
   const [selectedObjective, setSelectedObjective] = useState("website");
   const [campaignType, setCampaignType] = useState("new");
   const [existingCampaigns, setExistingCampaigns] = useState([]);
   const [selectedCampaign, setSelectedCampaign] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+  const [activeAccount, setActiveAccount] = useState({ id: "default", is_bound: false });
   const router = useRouter();
 
   const handleObjectiveSelect = (objective) => {
@@ -45,9 +48,16 @@ const Page = ({ activeAccount, setActiveAccount }) => {
     }
   }, [selectedObjective]);
 
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
   return (
     <div className={styles.pageContainer}>
-      <NavBar />
+      <NavBar
+        activeAccount={activeAccount}
+        setActiveAccount={setActiveAccount}
+      />
       <div className={styles.mainContent}>
         <StickySide />
         <div className={styles.formContainer}>
@@ -68,11 +78,11 @@ const Page = ({ activeAccount, setActiveAccount }) => {
               <div className={styles.content}>
                 <h3>Website Conversions</h3>
                 <p>
-                  Send people to your website and track conversions using the FB Pixel.
+                  Send people to your website and track conversions using the
+                  FB Pixel.
                 </p>
               </div>
             </div>
-            {/* Other objective divs remain the same */}
             <div
               className={`${styles.objective} ${
                 selectedObjective === "lead" ? styles.selected : ""
@@ -104,7 +114,10 @@ const Page = ({ activeAccount, setActiveAccount }) => {
               </div>
               <div className={styles.content}>
                 <h3>Traffic Campaign</h3>
-                <p>Drive more visitors to your website through targeted traffic campaigns.</p>
+                <p>
+                  Drive more visitors to your website through targeted traffic
+                  campaigns.
+                </p>
               </div>
             </div>
           </div>
@@ -188,6 +201,14 @@ const Page = ({ activeAccount, setActiveAccount }) => {
           </Link>
         </div>
       </div>
+
+      {showModal && (
+        <SetupAdAccountModal
+          onClose={handleModalClose}
+          activeAccount={activeAccount}
+          setActiveAccount={setActiveAccount}
+        />
+      )}
     </div>
   );
 };

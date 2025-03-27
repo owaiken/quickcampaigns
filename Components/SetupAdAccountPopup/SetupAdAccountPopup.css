@@ -65,7 +65,7 @@
     transition: background-color 0.3s;
 }
 
-.stepIndicator div.active {
+.stepIndicator div.active2 {
     background-color: #6C63FF;
 }
 
@@ -78,7 +78,7 @@
     text-align: left;
 }
 
-.stepContent.active {
+.stepContent.active2 {
     display: flex;
 }
 
@@ -155,13 +155,13 @@
     justify-content: space-evenly;
 }
 
-.buttons {
+.primaryButton {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
 }
 
-button {
+.cancelButton,.primaryButton {
     background-color: #6C63FF;
     color: white;
     border: none;
@@ -171,10 +171,11 @@ button {
     font-family: 'Poppins', sans-serif;
 }
 
-button:disabled {
+.primaryButton:disabled {
     background-color: #c0c0c0;
 }
 
-button:hover {
+.primaryButton:hover {
     background-color: #4D00B2;
+    color: white;
 }

@@ -1,12 +1,15 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
-import './SetupAdAccountPopup.css'
-const SetupAdAccountPopup = ({ onClose, activeAccount, setActiveAccount }) => {
+import "./SetupAdAccountPopup.css";
+
+const SetupAdAccountPopup = ({ onClose, onComplete, activeAccount, setActiveAccount }) => {
   const [adAccounts] = useState([
     { id: "act_001", name: "Ad Account 1" },
     { id: "act_002", name: "Ad Account 2" },
     { id: "act_003", name: "Ad Account 3" },
-  ]); // Mocked ad accounts
+  ]);
   const [selectedAdAccount, setSelectedAdAccount] = useState("");
   const [selectedAdAccountName, setSelectedAdAccountName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -24,7 +27,7 @@ const SetupAdAccountPopup = ({ onClose, activeAccount, setActiveAccount }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [onClose]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -37,33 +40,49 @@ const SetupAdAccountPopup = ({ onClose, activeAccount, setActiveAccount }) => {
   };
 
   const handleSubmit = () => {
-    // Update the activeAccount to mark it as bound
+    if (!selectedAdAccount) {
+      toast.error("Please select an ad account.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
     setActiveAccount({
       ...activeAccount,
       ad_account_id: selectedAdAccount,
       is_bound: true,
     });
 
-    toast.success("Ad account set up successfully!");
-    onClose();
+    toast.success("Ad account set up successfully!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+    onComplete();
   };
 
   return (
     <div className="popupOverlay">
       <div className="popupContent" ref={popupRef}>
         <div className="leftSide">
-          <h3>“QuickCampaigns Makes It Incredibly Easy To Create Multiple Campaigns With Just One Click, Saving You Countless Hours Of Work.”</h3>
+          <h3>
+            “QuickCampaigns Makes It Incredibly Easy To Create Multiple Campaigns With Just One Click, Saving You Countless Hours Of Work.”
+          </h3>
         </div>
         <div className="rightSide">
-          <div className="stepContent active">
+          <div className="stepContent active2">
             <h3>Which Ad Account Will You Be Using?</h3>
             <p>You'll be able to create and manage campaigns with this ad account.</p>
             <div className="dropdownContainer">
               <div className="customDropdown">
-                <div
-                  className="dropdownHeader"
-                  onClick={toggleDropdown}
-                >
+                <div className="dropdownHeader" onClick={toggleDropdown}>
                   {selectedAdAccountName ? selectedAdAccountName : "Select an ad account"}
                 </div>
                 {dropdownOpen && (
@@ -88,10 +107,7 @@ const SetupAdAccountPopup = ({ onClose, activeAccount, setActiveAccount }) => {
             </div>
           </div>
           <div className="TheButtons">
-            <button
-              onClick={onClose}
-              className="cancelButton"
-            >
+            <button onClick={onClose} className="cancelButton">
               Cancel
             </button>
             <button
