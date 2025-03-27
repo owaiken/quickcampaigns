@@ -172,9 +172,9 @@ const Pricing = ({ onPlanUpgrade }) => {
               }`}
             >
               {currentPlan === plan.name
-                ? "Current Plan"
-                : currentPlan === "Enterprise" && plan.name === "Professional"
                 ? "Downgrade"
+                : currentPlan === "Enterprise" && plan.name === "Professional"
+                ? "Current Plan"
                 : "Upgrade"}
             </button>
           </div>
@@ -200,9 +200,13 @@ const Pricing = ({ onPlanUpgrade }) => {
 const Page = () => {
   return (
     <div className="content">
-      <Navbar/>
-      <StickySide/>
+      <div className="pageContainer">
+            <Navbar />
+            <div className="mainContent">
+              <StickySide />
       <Pricing />
+    </div>
+    </div>
     </div>
   );
 };
