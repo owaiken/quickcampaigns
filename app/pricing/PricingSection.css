@@ -293,6 +293,9 @@
   .priceCardPrice {
     font-size: 1.8rem; /* Reduce font size for tablets */
   }
+  .pricingSection{
+    margin-left: 0;
+  }
 }
 
 /* Small Screens (Mobile Phones) */

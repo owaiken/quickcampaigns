@@ -15,17 +15,14 @@
   margin-left: 240px;
 }
 
-@media (max-width: 1024px) {
+@media  (max-width: 604px) {
   .mainContent {
     flex-direction: column;
+    margin-left: 0;
     align-items: center;
   }
-
-  .formContainer {
-    width: 90%;
-    margin: 0;
-  }
 }
+
 
 @media (max-width: 768px) {
   .formContainer {
