@@ -2,8 +2,8 @@
   text-align: center;
   font-family: 'Poppins', sans-serif;
   width: 80%;
-  max-width: 600px;
-  margin: 20px auto;
+  max-width: 600px; 
+  margin: 20px auto; 
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -42,7 +42,7 @@
 }
 
 .objective:hover {
-  background-color: #f0f0f0;
+  background-color: #f0f0f0; /* Grey background on hover */
 }
 
 .icon {
@@ -119,79 +119,81 @@
   background-color: #4044C9;
 }
 
+/* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
   .formContainer {
-    width: 90%;
+    width: 90%; /* Adjust the width to fit better on smaller screens */
     padding: 15px;
   }
 
   .heading {
-    font-size: 24px;
+    font-size: 24px; /* Slightly reduce the heading size */
   }
 
   .objective {
-    flex-direction: column;
+    flex-direction: column; /* Stack content vertically on smaller screens */
     text-align: left;
   }
 
   .icon {
-    margin-right: 0;
-    margin-bottom: 10px;
+    margin-right: 0; /* Remove right margin when stacked vertically */
+    margin-bottom: 10px; /* Add margin to separate icon from text */
   }
 
   .content h3 {
-    font-size: 16px;
+    font-size: 16px; /* Adjust font size for smaller screens */
   }
 
   .content p {
-    font-size: 13px;
+    font-size: 13px; /* Adjust font size for smaller screens */
   }
 
   .campaignTypeContainer {
-    flex-direction: column;
+    flex-direction: column; /* Stack buttons vertically */
     gap: 10px;
   }
 
   .campaignTypeButton {
-    width: 100%;
+    width: 100%; /* Make buttons full-width */
   }
 
   .nextButton {
-    font-size: 14px;
-    padding: 10px;
+    font-size: 14px; /* Adjust button text size */
+    padding: 10px; /* Adjust button padding */
   }
 }
 
 @media (max-width: 480px) {
   .formContainer {
-    width: 95%;
+    width: 95%; /* Further adjust width for very small screens */
     padding: 10px;
   }
 
   .heading {
-    font-size: 22px;
+    font-size: 22px; /* Further reduce heading size */
   }
 
   .content h3 {
-    font-size: 15px;
+    font-size: 15px; /* Adjust font size for smaller screens */
   }
 
   .content p {
-    font-size: 12px;
+    font-size: 12px; /* Adjust font size for smaller screens */
   }
 
   .nextButton {
-    font-size: 13px;
-    padding: 8px;
+    font-size: 13px; /* Further adjust button text size */
+    padding: 8px; /* Further adjust button padding */
   }
 }
 
+/* MainDropdown.module.css */
 
 .dropdownContainer {
   position: relative;
   width: 80%;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the dropdown container */
 }
 
 .dropdown,
@@ -210,7 +212,7 @@
 
 .dropdown:hover,
 .dropdownHeader:hover {
-  border-color: #6C63FF;
+  border-color: #6C63FF; /* Purple border on hover */
 }
 
 .dropdown:focus,
@@ -269,6 +271,7 @@
   }
 }
 
+/* ProgressBar.module.css */
 .progressContainer {
   text-align: center;
   font-family: 'Poppins', sans-serif;

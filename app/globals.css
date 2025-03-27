@@ -1,9 +1,10 @@
 /* styles/globals.css */
-html {
-    font-size: 14px; /* Adjust to match React’s effective size */
+.forhtml {
+    margin: 0;
+    padding: 0;
   }
   
-  body {
+  .forbody {
     margin: 0;
     padding: 0;
     font-size: 100%;
