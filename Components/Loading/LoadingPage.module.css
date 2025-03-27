@@ -5,38 +5,39 @@
 
 /* Global Styles */
 .body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif; /* Applying the font to the body directly */
-  height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    /* Applying the font to the body directly */
+    height: 100vh;
 }
 
 /* Container Styles */
 .pageContainer {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .mainContent {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
-  gap: 20px;
-  margin-left: 240px;
-  background-color: #EEEEEE;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px;
+    margin-left: 240px;
+    background-color: #EEEEEE;
 
 }
 
 @media (max-width: 604px) {
-  .mainContent {
-    flex-direction: column;
-    margin-left: 0;
-    align-items: center;
-  }
+    .mainContent {
+        flex-direction: column;
+        margin-left: 0;
+        align-items: center;
+    }
 }
 
 
@@ -48,11 +49,11 @@
     margin: 0 auto;
     margin-top: 5rem;
     gap: 48px;
-    
+
 }
 
 .processing {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 561px;
@@ -64,7 +65,7 @@
     text-align: center;
     box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.05),
         0px 16px 32px -4px rgba(0, 0, 0, 0.1);
-        margin-top: 20px;
+    margin-top: 80px;
 }
 
 .processing .text {
@@ -97,7 +98,8 @@
 .dot {
     width: 8px;
     height: 8px;
-    background-color: #D9D9D9; /* Light gray */
+    background-color: #D9D9D9;
+    /* Light gray */
     border-radius: 50%;
     animation: dot-move 1.5s infinite ease-in-out;
 }
@@ -115,15 +117,24 @@
 }
 
 @keyframes dot-move {
-    0%, 60%, 100% {
-        transform: translateY(0); /* Original position */
-        background-color: #D9D9D9; /* Light gray */
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        /* Original position */
+        background-color: #D9D9D9;
+        /* Light gray */
     }
+
     30% {
-        transform: translateY(-6px); /* Move up 6px */
-        background-color: #2D2D2D; /* Dark gray */
+        transform: translateY(-6px);
+        /* Move up 6px */
+        background-color: #2D2D2D;
+        /* Dark gray */
     }
 }
+
 .cancelButton {
     margin-top: 24px;
     font-size: 20px;
@@ -170,7 +181,7 @@
 .admultiplier,
 .crafter,
 .hooksmaster {
-    display: flex;
+    display: none;
     flex-direction: column;
     background-color: #17BEBB;
     border-radius: 16px;
@@ -233,7 +244,8 @@
     background-color: #fff;
     font-family: Inter;
 }
-.readyText{
+
+.readyText {
     text-align: center;
     font-size: 24px;
     font-weight: 400;
@@ -241,6 +253,7 @@
     letter-spacing: 0%;
     margin: 48px 0px;
 }
+
 .learnBtn:hover {
     background-color: #f1f1f1;
 }
