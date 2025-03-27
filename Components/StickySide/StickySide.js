@@ -14,7 +14,7 @@ const StickySide = ({ refreshTrigger }) => {
   const [adAccounts, setAdAccounts] = useState([]);
   const [adAccountDetails, setAdAccountDetails] = useState({});
   const [activeAdAccountsCount, setActiveAdAccountsCount] = useState(0);
-  const [userSubscriptionPlan, setUserSubscriptionPlan] = useState('Professional');
+  const [userSubscriptionPlan, setUserSubscriptionPlan] = useState('Enterprise');  // Set to 'Enterprise' for testing
   const [isDropdownVisible, setDropdownVisible] = useState(true);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,10 +74,12 @@ const StickySide = ({ refreshTrigger }) => {
   };
 
   const handleAddAdAccountClick = () => {
-    console.log('Add New Ad Account clicked');
+    console.log('Add New Ad Account clicked'); // Debug log
     // Trigger info toast when adding a new ad account
     toast.info("Adding a new Ad Account...");
   };
+
+  console.log(userSubscriptionPlan); // Debugging log to check the subscription plan
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -168,7 +170,6 @@ const StickySide = ({ refreshTrigger }) => {
         </div>
       </div>
 
-      {/* Toast Container must be included once in your app */}
       <ToastContainer />
     </div>
   );
