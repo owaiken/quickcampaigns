@@ -55,12 +55,7 @@ const Page = () => {
                         <div className="content">
                             <div className="p-container">
                                 <div className="header">
-                                    {/* <img
-                                        src="/assets/arrow-left.png"
-                                        alt="Go Back"
-                                        className="goBackIcon"
-                                        onClick={() => window.history.back()}
-                                    /> */}
+                                   
                                     <Link href="/main"><img src="/assets/arrow-left.png" alt="Go Back" className="goBackIcon"/></Link>
                                     <h2>Profile Management</h2>
                                 </div>

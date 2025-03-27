@@ -1,8 +1,6 @@
-/* styles/globals.css */
-
-/* Importing Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-*{
+
+body{
   margin: 0;
   padding: 0;
 }
@@ -17,6 +15,7 @@
   background-color: #f7f7f7;
   overflow-y: auto;
 }
+
 
 /* Main container styling */
 .container {
@@ -34,6 +33,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 
 /* Position the logo at the top right */
 .logo-header {
@@ -105,7 +105,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 20px; /* Add padding for better spacing on small screens */
   box-sizing: border-box;
 }
 
@@ -154,6 +154,7 @@ h1 {
 .linkText:hover {
   color: #4044C9;
 }
+
 
 .closeIcon {
   position: absolute;
@@ -209,12 +210,13 @@ h1 {
   width: 20px;
 }
 
+
+
 @media (max-width: 960px){
   .logo-header {
     width: 210px;
-  }
 }
-
+}
 @media (max-width: 960px) {
   .container {
     width: 90%;
@@ -256,6 +258,8 @@ h1 {
 
 .remember-me-text {
   margin-left: 10px;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .facebookLogin {

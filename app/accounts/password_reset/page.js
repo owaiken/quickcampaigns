@@ -51,7 +51,7 @@ const Page = () => {
                     <input
                         type="email"
                         name="email"
-                        placeholder="Enter your email"
+                        placeholder="Email"
                         value={formData.email}
                         onChange={handleChange}
                         className="form-input"

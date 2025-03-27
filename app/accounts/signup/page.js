@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import ReCAPTCHA from "react-google-recaptcha";
-// import "./Login.css";
+import "/app/accounts/login/Login.css"; 
+
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -12,7 +13,7 @@ const RegisterPage = () => {
     confirmPassword: "",
     recaptcha: null,
   });
-
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
     email: "",
@@ -48,10 +49,11 @@ const RegisterPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
+    validateField(name, value); // Validate on change as well
   };
 
   const handleBlur = (e) => {
@@ -60,27 +62,37 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    
+    // Check all fields before submission
+    Object.keys(formData).forEach((key) => {
+      if (key !== "recaptcha") {
+        validateField(key, formData[key]);
+      }
+    });
+
+    // Check if there are any errors
+    if (Object.values(errors).every((error) => error === "")) {
+      console.log("Form Data Submitted:", formData);
+    } else {
+      console.log("Form has errors:", errors);
+    }
   };
 
   return (
     <div className="page-container">
-      {/* Logo */}
-      <link rel="stylesheet" href="/Styles/Login.css" />
+      <Link href="/">
+        <img src="/assets/logo-header.png" alt="Logo" className="logo-header" />
+      </Link>
 
-      <Link href="/"><img src="/assets/logo-header.png" alt="Logo" className="logo-header" /></Link>
-
-
-      {/* Register Container */}
       <div className="container">
-        <h1>Register</h1>
-
+        <h1>Complete Your Registration</h1>
+        <p>Set your username and password to proceed.</p>
         <form onSubmit={handleSubmit} className="form-container">
           {/* Name Input */}
           <input
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder="Username"
             value={formData.name}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -93,7 +105,7 @@ const RegisterPage = () => {
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Enter Your Email"
             value={formData.email}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -105,7 +117,7 @@ const RegisterPage = () => {
           {/* Password Input */}
           <div className="password-container">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={formData.password}
@@ -114,43 +126,53 @@ const RegisterPage = () => {
               className="form-input"
               required
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="password-toggle"
+            >
+              <img
+                src={showPassword ? "/assets/eye-off.svg" : "/assets/eye.svg"}
+                alt="Toggle Password Visibility"
+              />
+            </span>
           </div>
           {errors.password && <p className="error">{errors.password}</p>}
 
           {/* Confirm Password Input */}
           <div className="password-container">
             <input
-              type="password"
-              name="confirmPassword"
+              type={showPassword ? "text" : "password"}
+              name="confirmPassword" // Fixed from "password" to "confirmPassword"
               placeholder="Confirm Password"
-              value={formData.confirmPassword}
+              value={formData.confirmPassword} // Fixed to use confirmPassword
               onChange={handleChange}
               onBlur={handleBlur}
               className="form-input"
               required
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="password-toggle"
+            >
+              <img
+                src={showPassword ? "/assets/eye-off.svg" : "/assets/eye.svg"}
+                alt="Toggle Password Visibility"
+              />
+            </span>
           </div>
           {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
 
-          {/* Google reCAPTCHA */}
-          <ReCAPTCHA
-            sitekey="YOUR_GOOGLE_RECAPTCHA_SITE_KEY"
-            onChange={(value) => setFormData({ ...formData, recaptcha: value })}
-          />
+          {/* ReCAPTCHA (optional - uncomment if you want to use it) */}
+          {/* <ReCAPTCHA
+            sitekey="YOUR_RECAPTCHA_SITE_KEY"
+            onChange={(value) => setFormData((prev) => ({ ...prev, recaptcha: value }))}
+          /> */}
 
           {/* Submit Button */}
           <button type="submit" className="option-button">
-            Create account
+            Finish
           </button>
         </form>
-
-        {/* Links */}
-        <p className="switchLink">
-          Already have an account?{" "}
-          <Link href="/accounts/login" className="linkText">
-            Sign in
-          </Link>
-        </p>
       </div>
     </div>
   );

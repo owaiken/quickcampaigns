@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import ReCAPTCHA from "react-google-recaptcha";
 import "./Login.css";
 
 const LoginPage = () => {
@@ -67,23 +66,17 @@ const LoginPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Validate all fields before submitting
         validateField("email", formData.email);
         validateField("password", formData.password);
 
-        // Check if there are no errors and reCAPTCHA is verified (if enabled)
         if (!errors.email && !errors.password && (!formData.recaptcha || formData.recaptcha)) {
             console.log("Form Data Submitted:", formData);
-            // Simulate a login success (replace with actual login logic if needed)
-            // After successful login, reload the page
             window.location.href = "/main"; // Redirects and reloads the page
-            // Alternatively, use window.location.reload() after navigation if needed
         }
     };
 
     return (
         <div className="page-container">
-            {/* Logo */}
             <Link href="/"><img src="/assets/logo-header.png" alt="Logo" className="logo-header" /></Link>
 
             {/* Login Container */}
@@ -123,8 +116,7 @@ const LoginPage = () => {
                             <img
                                 src={showPassword ? "/assets/eye-off.svg" : "/assets/eye.svg"}
                                 alt="Toggle Password Visibility"
-                                width="20"
-                                height="20"
+                              
                             />
                         </span>
                     </div>
@@ -140,27 +132,10 @@ const LoginPage = () => {
                         />
                         <span className="remember-me-text">Remember me</span>
                     </div>
-
-                    {/* Google reCAPTCHA (uncomment and add your site key if needed) */}
-                    {/* <ReCAPTCHA
-                        sitekey="YOUR_GOOGLE_RECAPTCHA_SITE_KEY"
-                        onChange={(value) => setFormData({ ...formData, recaptcha: value })}
-                    />
-                    {!formData.recaptcha && <p className="error">Please verify reCAPTCHA</p>} */}
-
-                    {/* Submit Button */}
                     <button type="submit" className="option-button">
                         Sign In
                     </button>
                 </form>
-
-                {/* Links */}
-                <p className="switchLink">
-                    Don’t have an account?{" "}
-                    <Link href="/accounts/signup" className="linkText">
-                        Register
-                    </Link>
-                </p>
                 <p className="switchLink">
                     <Link href="/accounts/password_reset" className="linkText">
                         Forgot your password?
