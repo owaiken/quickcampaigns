@@ -103,8 +103,10 @@ const CampaignForm = ({
 
   return (
     <div className={`${styles.pageWrapper} forclr`}>
-      <Navbar />
-      <StickySide />
+      <div className={styles.pageContainer}>
+      <Navbar/>
+      <div className={styles.mainContent}>
+        <StickySide />
       <div className={styles.formContainer} >
         <div className={styles.header}>
           <Link href="/main">
@@ -219,6 +221,8 @@ const CampaignForm = ({
           </div>
         </form>
       </div>
+    </div>
+    </div>
     </div>
   );
 };
