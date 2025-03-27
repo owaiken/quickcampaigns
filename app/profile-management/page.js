@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import "/public/Styles/ProfileModule.css";
-import "/public/Styles/side-menu.css";
-import "/public/Styles/style.css";
-import "/public/Styles/Pricing.css";
-import Header from "@/Components/Header/Header";
+// import "/public/Styles/side-menu.css";
+// import "/public/Styles/style.css";
+// import "/public/Styles/Pricing.css";
 import Link from "next/link";
+import Navbar from "@/Components/NavBar/NavBar";
+import StickySide from "@/Components/StickySide/StickySide";
 
 const Page = () => {
     // States for handling profile data and image
@@ -46,7 +47,8 @@ const Page = () => {
 
     return (
         <div className="forclr">
-            <Header />
+            <Navbar />
+            <StickySide/>
             <div className="main-container">
                 <div className="main-content" id="content">
                     <main>

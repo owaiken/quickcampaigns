@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import "./LandingStyles.css"
-import Nav from '../NavBar/Nav';
+import Nav from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Link from 'next/link';
 

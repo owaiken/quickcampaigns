@@ -1,16 +1,13 @@
 "use client";
-
 import { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import dynamic from 'next/dynamic';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "@/Components/NavBar/NavBar";
+import StickySide from "@/Components/StickySide/StickySide";
 import styles from "@/Components/CampaignFormComp/CampaignForm.module.css";
-import Header from "@/Components/Header/Header";
 import Link from "next/link";
-import "/public/Styles/side-menu.css";
-import "/public/Styles/style.css";
-import "/public/Styles/home.css";
 import Image from "next/image";
 
 const ConfigForm = dynamic(
@@ -105,9 +102,10 @@ const CampaignForm = ({
   };
 
   return (
-    <div className={styles.pageWrapper}>
-      <Header />
-      <div className={styles.formContainer}>
+    <div className={`${styles.pageWrapper} forclr`}>
+      <Navbar />
+      <StickySide />
+      <div className={styles.formContainer} >
         <div className={styles.header}>
           <Link href="/main">
             <Image
