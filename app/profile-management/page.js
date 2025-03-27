@@ -1,9 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import "/public/Styles/ProfileModule.css";
-// import "/public/Styles/side-menu.css";
-// import "/public/Styles/style.css";
-// import "/public/Styles/Pricing.css";
+import "./ProfileManagement.css";
 import Link from "next/link";
 import Navbar from "@/Components/NavBar/NavBar";
 import StickySide from "@/Components/StickySide/StickySide";
@@ -47,8 +44,10 @@ const Page = () => {
 
     return (
         <div className="forclr">
-            <Navbar />
-            <StickySide/>
+            <div className="pageContainer">
+      <Navbar />
+      <div className="mainContent">
+        <StickySide />
             <div className="main-container">
                 <div className="main-content" id="content">
                     <main>
@@ -391,6 +390,8 @@ const Page = () => {
                     </main>
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     );
 };
