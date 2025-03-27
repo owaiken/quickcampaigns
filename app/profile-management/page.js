@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import "./ProfileManagement.css";
+import '/public/Styles/fonts.css'
 import Link from "next/link";
 import Navbar from "@/Components/NavBar/NavBar";
 import StickySide from "@/Components/StickySide/StickySide";
@@ -8,7 +9,7 @@ import StickySide from "@/Components/StickySide/StickySide";
 const Page = () => {
     // States for handling profile data and image
     const [fullName, setFullName] = useState("test account");
-    const [email] = useState("alihusnain@test.com");
+    const [email] = useState("dummy@test.com");
     const [profilePic, setProfilePic] = useState("/assets/profileImage.png");
     const [isConfirmDelete, setIsConfirmDelete] = useState(false);
 
@@ -136,7 +137,7 @@ const Page = () => {
                                         </div>
                                         <div className="subscriptionContent">
                                             <div className="detailItem">
-                                                <span>Current Plan:</span>
+                                                <span>Upgrade</span>
                                                 <span className="tag professional">Enterprise</span>
                                             </div>
                                             <div className="detailItem">
@@ -207,7 +208,7 @@ const Page = () => {
                                     <div className="priceCardContainer">
                                         <div className="priceCard popularPlan">
                                             <div>
-                                                <p className="priceCardPrice">$129.5/month</p>
+                                                <p className="priceCardPrice">$129.5/Month</p>
                                                 <p className="priceCardAccounts">1 Ad Account</p>
                                                 <p className="priceCardPlan">Professional Plan</p>
                                                 <p className="priceCardPlanDesc">
@@ -297,7 +298,7 @@ const Page = () => {
                                         </div>
                                         <div className="priceCard popularPlan">
                                             <div>
-                                                <p className="priceCardPrice">$99.5/month</p>
+                                                <p className="priceCardPrice">$99.5/Month</p>
                                                 <p className="priceCardAccounts"> For up to 2 Ad Accounts, with pricing per account.</p>
                                                 <p className="priceCardPlan">Enterprise plan</p>
                                                 <p className="priceCardPlanDesc">Ideal for Agencies and Businesses</p>

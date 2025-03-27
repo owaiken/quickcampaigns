@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import styles from "./MainStyles.module.css"; 
 import NavBar from "@/Components/NavBar/NavBar";
 import StickySide from "@/Components/StickySide/StickySide";
+import '/public/Styles/fonts.css'
 
 const Page = ({ activeAccount, setActiveAccount }) => {
   const [selectedObjective, setSelectedObjective] = useState("website");

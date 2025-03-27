@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "@/Components/NavBar/NavBar";
 import StickySide from "@/Components/StickySide/StickySide";
 import styles from "@/Components/CampaignFormComp/CampaignForm.module.css";
+import '/public/Styles/fonts.css'
 import Link from "next/link";
 import Image from "next/image";
 

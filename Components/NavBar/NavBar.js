@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../ToastifyOverrides.css';
 import './NavBar.css';
+
 import Link from 'next/link';
 
 const Navbar = ({ activeAccount, setActiveAccount, refreshTrigger }) => {
@@ -46,7 +47,8 @@ const Navbar = ({ activeAccount, setActiveAccount, refreshTrigger }) => {
   };
 
   return (
-    <nav className="navbar">
+    <div className='forbody'>
+      <nav className="navbar">
       <div className="navbar-right">
         <img
           src={profilePic}
@@ -66,7 +68,7 @@ const Navbar = ({ activeAccount, setActiveAccount, refreshTrigger }) => {
             >
               Manage Subscription
             </div>
-            <Link href="/" className="linktag">
+            <Link href="/" className="forlink">
               <div className="dropdown-item" onClick={handleLogout}>
                 Log Out
               </div>
@@ -76,6 +78,7 @@ const Navbar = ({ activeAccount, setActiveAccount, refreshTrigger }) => {
       </div>
       <ToastContainer />
     </nav>
+    </div>
   );
 };
 
