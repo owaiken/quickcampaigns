@@ -63,30 +63,6 @@ const Page = () => {
                                     <div className="section">
                                         <h3>Profile Information</h3>
                                         <div className="formSection">
-                                            <div className="profilePicSection">
-                                                <div className="profilePicWrapper">
-                                                    <div className="placeholder">
-                                                        <img
-                                                            src={profilePic}
-                                                            alt="Profile"
-                                                            className="placeholderIcon"
-                                                        />
-                                                    </div>
-                                                    <input
-                                                        type="file"
-                                                        accept="image/*"
-                                                        className="hiddenFileInput"
-                                                        onChange={handleProfilePicChange}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <p className="uploadText">
-                                                        <img src="/assets/upload.png" alt="Upload" /> Upload Image
-                                                    </p>
-                                                    <p className="fileHint">JPG, PNG, or GIF, Max 2MB</p>
-                                                </div>
-                                            </div>
-
                                             <label htmlFor="fullName" className="label">Full Name:</label>
                                             <input
                                                 type="text"

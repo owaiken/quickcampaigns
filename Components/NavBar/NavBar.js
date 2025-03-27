@@ -36,8 +36,8 @@ const Navbar = ({ activeAccount, setActiveAccount, refreshTrigger }) => {
   const handleOptionClick = (path) => {
     setDropdownVisible(false);
     router.push(path);
-    toast.info(`Navigating to ${path}`);
   };
+  
 
   const handleLogout = () => {
     // Internal logout logic (e.g., redirect to home)

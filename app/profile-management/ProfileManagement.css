@@ -118,6 +118,7 @@ html, body {
 
 .formSection input {
   min-width: 580px;
+  width: 100%;
 }
 
 .placeholder {
@@ -182,7 +183,6 @@ html, body {
 
 .profileInput {
   width: 500px;
-  max-width: 90%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -193,6 +193,7 @@ html, body {
 }
 
 .buttonContainer {
+  margin-top: 10px;
   display: flex;
   justify-content: flex-end;
   width: 100%;
