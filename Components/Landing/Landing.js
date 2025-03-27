@@ -61,6 +61,7 @@ const Landing = () => {
               src="https://quickcampaignvideos.s3.us-east-1.amazonaws.com/hero-video.mp4"
               playsInline
               controls
+              poster='/assets/poster2.jpg'
             ></video>
           </div>
         </div>
