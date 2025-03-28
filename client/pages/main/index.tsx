@@ -277,7 +277,7 @@ const MainPage = () => {
               Connect Facebook Ad Account
             </Button>
             <Text fontSize="sm" color="gray.500">
-              We'll only request the permissions needed to create and manage your campaigns.
+              We&apos;ll only request the permissions needed to create and manage your campaigns.
             </Text>
           </ModalBody>
           <ModalFooter>

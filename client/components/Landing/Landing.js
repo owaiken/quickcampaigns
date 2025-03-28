@@ -79,7 +79,7 @@ const Landing = () => {
             As a digital marketer, you know the importance of testing multiple
             creatives to optimize your Facebook Ads performance. But the process
             of manually creating campaigns, ad sets, and ads is painfully slow.
-            With each click, you're forced to wait for pages to load, eating away
+            With each click, you&apos;re forced to wait for pages to load, eating away
             at your precious time and productivity.
           </p>
 
