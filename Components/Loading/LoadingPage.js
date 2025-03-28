@@ -30,10 +30,10 @@ const LoadingPage = () => {
           </button>
         </div>
 
-        <div className={styles.readyText}>
+        {/* <div className={styles.readyText}>
           <p>While We Get Things Ready For You,</p>
           <p>Check Out These Amazing Software's To Boost Your Productivity!</p>
-        </div>
+        </div> */}
 
         <div className={styles.sponsors}>
           <div className={styles.admultiplier}>
