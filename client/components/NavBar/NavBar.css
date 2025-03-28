@@ -1,0 +1,83 @@
+
+/* src/components/Navbar.css */
+.forbody{
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  box-sizing: border-box;
+}
+.navbar {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #000; /* Black line to show where navbar ends */
+  box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+  overflow: hidden; /* Prevent horizontal scrolling */
+}
+.forlink{
+  text-decoration: none;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-icon {
+  margin-right: 30px;
+  cursor: pointer;
+  width: 18px;
+  height: 20px;
+  
+}
+
+.navbar-profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 30px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 50px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  z-index: 1000;
+  padding: 5px;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  margin: 2px;
+}
+
+.dropdown-item1 {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  margin: 2px;
+}
+
+.dropdown-item:hover {
+  background-color: #5356FF;
+  color: white;
+  border-radius: 7px;
+}
+
+.dropdown-item:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
