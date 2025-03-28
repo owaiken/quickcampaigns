@@ -8,15 +8,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "${BACKEND_URL}/api/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "NEXT_PUBLIC_API_URL": "${BACKEND_URL}"
-  }
+  ]
 }
