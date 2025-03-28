@@ -179,3 +179,11 @@
     background-color: #4D00B2;
     color: white;
 }
+@media screen and (max-width:550px){
+    .popupContent{
+        margin-top: 240px;
+    }
+    .popupOverlay{
+        top: 241px;
+    }
+}
