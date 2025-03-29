@@ -19,6 +19,10 @@ import {
   Stack,
   Textarea,
   useToast,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -35,6 +39,9 @@ import {
 // Import components dynamically to avoid SSR issues
 const NavBar = dynamic(() => import("../../components/NavBar/NavBar"), { ssr: false });
 
+// Import the Facebook connect button dynamically to avoid SSR issues
+const FacebookConnectButton = dynamic(() => import('../../components/FacebookConnectButton'), { ssr: false });
+
 // Create a simplified campaign form page that works with our API
 const CampaignFormPage = () => {
   const router = useRouter();
@@ -49,6 +56,8 @@ const CampaignFormPage = () => {
   const [targetAudience, setTargetAudience] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [hasFacebookAccount, setHasFacebookAccount] = useState(false);
+  const [checkingFacebookAccount, setCheckingFacebookAccount] = useState(true);
   
   useEffect(() => {
     // Check if user is authenticated
@@ -56,6 +65,20 @@ const CampaignFormPage = () => {
     if (!token) {
       router.push("/accounts/login");
     }
+    
+    // Check if user has connected Facebook account
+    const checkFacebookAccount = async () => {
+      try {
+        const response = await apiClient.get("/api/campaigns/auth/facebook/accounts/");
+        setHasFacebookAccount(response.data.length > 0);
+      } catch (error) {
+        console.error("Error checking Facebook accounts:", error);
+      } finally {
+        setCheckingFacebookAccount(false);
+      }
+    };
+    
+    checkFacebookAccount();
   }, [router]);
   
   useEffect(() => {
@@ -124,8 +147,19 @@ const CampaignFormPage = () => {
     });
   };
   
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    
+    if (!hasFacebookAccount) {
+      toast({
+        title: "Facebook account required",
+        description: "Please connect your Facebook ad account before creating a campaign.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     
     if (uploadedFiles.length === 0) {
       toast({
@@ -151,8 +185,57 @@ const CampaignFormPage = () => {
     
     setIsLoading(true);
     
-    // In a real implementation, you would send the form data to your API
-    setTimeout(() => {
+    try {
+      // Prepare form data
+      const formData = new FormData();
+      formData.append('name', campaignName);
+      
+      // Map the frontend objective to backend choices
+      let backendObjective;
+      switch(campaignObjective) {
+        case 'WEBSITE_CONVERSIONS':
+          backendObjective = 'website';
+          break;
+        case 'LEAD_GENERATION':
+          backendObjective = 'lead';
+          break;
+        default:
+          backendObjective = 'traffic';
+      }
+      
+      formData.append('objective', backendObjective);
+      formData.append('budget', budget);
+      formData.append('start_date', startDate);
+      
+      if (endDate) {
+        formData.append('end_date', endDate);
+      }
+      
+      if (targetAudience) {
+        formData.append('target_audience', targetAudience);
+      }
+      
+      // First create the campaign
+      const campaignResponse = await apiClient.post('campaigns/', formData);
+      
+      // If campaign created successfully, upload creatives
+      if (campaignResponse.data && campaignResponse.data.id) {
+        const campaignId = campaignResponse.data.id;
+        
+        // Upload each creative
+        for (let i = 0; i < uploadedFiles.length; i++) {
+          const fileFormData = new FormData();
+          fileFormData.append('campaign', campaignId);
+          fileFormData.append('file', uploadedFiles[i]);
+          
+          await apiClient.post(`campaigns/${campaignId}/creatives/`, fileFormData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+        }
+      }
+      
       setIsLoading(false);
       
       toast({
@@ -163,9 +246,20 @@ const CampaignFormPage = () => {
         isClosable: true,
       });
       
-      // Redirect back to the main page instead of a non-existent loading page
+      // Redirect back to the main page
       router.push("/main");
-    }, 2000);
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Error creating campaign:', error);
+      
+      toast({
+        title: "Error creating campaign",
+        description: "There was an error creating your campaign. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
   
   return (
@@ -175,7 +269,7 @@ const CampaignFormPage = () => {
         <Container maxW="container.xl">
           <Flex justify="space-between" align="center">
             <Link href="/">
-              <Box as="img" src="/assets/logo-header.png" alt="Logo" height="40px" />
+              <img src="/assets/logo-header.png" alt="Logo" style={{ height: '40px' }} />
             </Link>
             <Flex align="center">
               <Text mr={4}>Welcome, User</Text>
@@ -205,6 +299,14 @@ const CampaignFormPage = () => {
                 Back
               </Button>
             </Link>
+            
+            {!checkingFacebookAccount && !hasFacebookAccount && (
+              <Box ml="auto">
+                <FacebookConnectButton 
+                  onConnected={(connected: boolean) => setHasFacebookAccount(connected)} 
+                />
+              </Box>
+            )}
             <Heading as="h1" size="lg" ml={4}>
               Choose Your Launch Setting
             </Heading>
@@ -223,11 +325,12 @@ const CampaignFormPage = () => {
               width="100%"
               maxHeight="400px"
               src="https://quickcampaignvideos.s3.us-east-1.amazonaws.com/how-to-video.mp4"
+              title="Tutorial video"
             />
           </Box>
           
           <form id="campaignForm" onSubmit={handleSubmit}>
-            <Accordion allowToggle defaultIndex={[0]} mb={8}>
+            <Accordion allowToggle defaultIndex={[0] as number[]} mb={8}>
               {/* Creative Upload Section */}
               <AccordionItem>
                 <Box as="h2">

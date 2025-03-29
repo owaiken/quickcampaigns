@@ -19,6 +19,9 @@ stripe==4.0.2
 # Nested Routers for API
 drf-nested-routers==0.93.4
 
+# Facebook Marketing API
+facebook-business==17.0.0
+
 # Caching and Task Queue
 redis==4.3.4
 celery==5.2.7

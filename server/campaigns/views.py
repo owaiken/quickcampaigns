@@ -1,12 +1,16 @@
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+import logging
 from .models import Campaign, CampaignCreative, FacebookAdAccount, UserCredit, CreditTransaction
 from .serializers import (
     CampaignSerializer, CampaignCreativeSerializer, 
     FacebookAdAccountSerializer, UserCreditSerializer,
     CreditTransactionSerializer
 )
+from .services.facebook_service import FacebookService
+
+logger = logging.getLogger(__name__)
 
 
 class FacebookAdAccountViewSet(viewsets.ModelViewSet):
@@ -77,27 +81,60 @@ class CampaignViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_402_PAYMENT_REQUIRED
             )
         
-        # In a real implementation, this would call the Facebook Marketing API
-        # For now, we'll simulate a successful launch
-        campaign.status = 'active'
-        campaign.facebook_campaign_id = f"fb_campaign_{campaign.id}"
-        campaign.save()
-        
-        # Deduct credits
-        user_credit.balance -= 1
-        user_credit.save()
-        
-        # Record the transaction
-        CreditTransaction.objects.create(
-            user=request.user,
-            amount=-1,
-            transaction_type='usage',
-            description=f"Credit used for campaign: {campaign.name}",
-            campaign=campaign
-        )
-        
-        serializer = self.get_serializer(campaign)
-        return Response(serializer.data)
+        try:
+            # Get user's Facebook ad account
+            fb_account = FacebookAdAccount.objects.filter(user=request.user, is_active=True).first()
+            
+            if not fb_account:
+                return Response(
+                    {"detail": "No connected Facebook ad account found. Please connect your Facebook account first."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            # Create Facebook campaign using the user's Facebook account
+            fb_service = FacebookService(
+                access_token=fb_account.access_token,
+                ad_account_id=fb_account.account_id.replace('act_', '')  # Remove 'act_' prefix if present
+            )
+            
+            facebook_campaign_id = fb_service.create_campaign(
+                name=campaign.name,
+                objective=campaign.objective,
+                daily_budget=str(campaign.budget),
+                start_time=campaign.start_date.isoformat(),
+                end_time=campaign.end_date.isoformat() if campaign.end_date else None,
+                status='ACTIVE'
+            )
+            
+            # Update campaign with Facebook ID
+            campaign.status = 'active'
+            campaign.facebook_campaign_id = facebook_campaign_id
+            campaign.save()
+            
+            # Deduct credits
+            user_credit.balance -= 1
+            user_credit.save()
+            
+            # Record the transaction
+            CreditTransaction.objects.create(
+                user=request.user,
+                amount=-1,
+                transaction_type='usage',
+                description=f"Credit used for campaign: {campaign.name}",
+                campaign=campaign
+            )
+            
+            logger.info(f"Successfully launched campaign {campaign.id} to Facebook with ID {facebook_campaign_id}")
+            
+            serializer = self.get_serializer(campaign)
+            return Response(serializer.data)
+            
+        except Exception as e:
+            logger.error(f"Error launching campaign to Facebook: {str(e)}")
+            return Response(
+                {"detail": f"Error launching campaign: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class CampaignCreativeViewSet(viewsets.ModelViewSet):
