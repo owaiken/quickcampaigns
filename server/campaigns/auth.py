@@ -22,7 +22,11 @@ def facebook_login(request):
     Redirect the user to Facebook OAuth login page
     """
     app_id = os.environ.get('FACEBOOK_APP_ID')
-    redirect_uri = request.build_absolute_uri(reverse('facebook-callback'))
+    
+    # Use a hardcoded redirect URI that matches what's configured in Facebook
+    # This should be the URL that's allowed in your Facebook app settings
+    base_url = "https://quickcampaigns.onrender.com"
+    redirect_uri = f"{base_url}/api/campaigns/auth/facebook/callback/"
     
     # Define the permissions we need
     scope = 'ads_management,ads_read,business_management'
@@ -63,7 +67,10 @@ def facebook_callback(request):
         # Exchange code for access token
         app_id = os.environ.get('FACEBOOK_APP_ID')
         app_secret = os.environ.get('FACEBOOK_APP_SECRET')
-        redirect_uri = request.build_absolute_uri(reverse('facebook-callback'))
+        
+        # Use the same hardcoded redirect URI as in the login function
+        base_url = "https://quickcampaigns.onrender.com"
+        redirect_uri = f"{base_url}/api/campaigns/auth/facebook/callback/"
         
         response = requests.get(
             'https://graph.facebook.com/v17.0/oauth/access_token',
