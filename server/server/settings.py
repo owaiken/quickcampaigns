@@ -149,6 +149,7 @@ USE_TZ = True
 # Specify allowed origins
 CORS_ALLOWED_ORIGINS = [
     "https://quickcampaigns.vercel.app",
+    "https://quickcampaigns-6uwv.vercel.app",
     "http://localhost:3000",  # For local development
 ]
 
