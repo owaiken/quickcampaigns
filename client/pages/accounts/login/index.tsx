@@ -78,8 +78,11 @@ const LoginPage = () => {
             
             try {
                 // Call the Django JWT auth endpoint
+                const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/';
+                const apiUrl = baseUrl.endsWith('/') ? `${baseUrl}auth/jwt/create/` : `${baseUrl}/auth/jwt/create/`;
+                
                 const response = await axios.post(
-                    `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/'}auth/jwt/create/`, 
+                    apiUrl, 
                     {
                         username: formData.email,
                         password: formData.password

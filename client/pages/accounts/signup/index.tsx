@@ -96,8 +96,11 @@ const SignupPage = () => {
       
       try {
         // Call the Django registration endpoint
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/';
+        const apiUrl = baseUrl.endsWith('/') ? `${baseUrl}auth/users/` : `${baseUrl}/auth/users/`;
+        
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/'}auth/users/`, 
+          apiUrl, 
           {
             username: formData.name,
             email: formData.email,
