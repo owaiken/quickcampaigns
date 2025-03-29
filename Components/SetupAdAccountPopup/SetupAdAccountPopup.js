@@ -74,6 +74,14 @@ const SetupAdAccountPopup = ({ onClose, onComplete, activeAccount, setActiveAcco
     setDropdownOpen(false);
   };
 
+  // Connect Facebook account
+  const connectFacebook = () => {
+    setIsConnecting(true);
+    // Use the full backend URL for the Facebook login endpoint
+    const apiUrl = "https://quickcampaigns.onrender.com";
+    window.location.href = `${apiUrl}/api/campaigns/auth/facebook/login/`;
+  };
+
   const handleSubmit = () => {
     if (!selectedAdAccount) {
       toast.error("Please select an ad account.", {
@@ -115,43 +123,62 @@ const SetupAdAccountPopup = ({ onClose, onComplete, activeAccount, setActiveAcco
           <div className="stepContent active2">
             <h3>Which Ad Account Will You Be Using?</h3>
             <p>You'll be able to create and manage campaigns with this ad account.</p>
-            <div className="dropdownContainer">
-              <div className="customDropdown">
-                <div className="dropdownHeader" onClick={toggleDropdown}>
-                  {selectedAdAccountName ? selectedAdAccountName : "Select an ad account"}
-                </div>
-                {dropdownOpen && (
-                  <div className="dropdownList">
-                    {adAccounts.map((account) => (
-                      <div
-                        key={account.id}
-                        className="dropdownItem"
-                        onClick={() => handleSelect(account.id, account.name)}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={selectedAdAccount === account.id}
-                          onChange={() => handleSelect(account.id, account.name)}
-                        />
-                        <span>{account.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+            
+            {isLoading ? (
+              <div className="loading-spinner">Loading...</div>
+            ) : !isConnected ? (
+              <div className="facebook-connect-container">
+                <p>Connect your Facebook ad account to proceed:</p>
+                <button 
+                  className="facebook-connect-button"
+                  onClick={connectFacebook}
+                  disabled={isConnecting}
+                >
+                  <FaFacebook className="facebook-icon" />
+                  {isConnecting ? "Connecting..." : "Connect Facebook Ad Account"}
+                </button>
               </div>
-            </div>
+            ) : (
+              <div className="dropdownContainer">
+                <div className="customDropdown">
+                  <div className="dropdownHeader" onClick={toggleDropdown}>
+                    {selectedAdAccountName ? selectedAdAccountName : "Select an ad account"}
+                  </div>
+                  {dropdownOpen && (
+                    <div className="dropdownList">
+                      {adAccounts.map((account) => (
+                        <div
+                          key={account.account_id}
+                          className="dropdownItem"
+                          onClick={() => handleSelect(account.account_id, account.name)}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedAdAccount === account.account_id}
+                            onChange={() => handleSelect(account.account_id, account.name)}
+                          />
+                          <span>{account.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
           <div className="TheButtons">
             <button onClick={onClose} className="cancelButton">
               Cancel
             </button>
-            <button
-              onClick={handleSubmit}
-              className="primaryButton"
-              disabled={!selectedAdAccount}
-            >
-              Submit
-            </button>
+            {isConnected && (
+              <button
+                onClick={handleSubmit}
+                className="primaryButton"
+                disabled={!selectedAdAccount}
+              >
+                Submit
+              </button>
+            )}
           </div>
         </div>
       </div>
