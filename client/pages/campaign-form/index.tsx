@@ -1,46 +1,62 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
+import dynamic from 'next/dynamic';
+import { toast as reactToast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import apiClient from "../../utils/apiClient";
 import Link from "next/link";
 import {
   Box,
   Button,
   Container,
   Flex,
+  Heading,
+  Text,
+  Input,
   FormControl,
   FormLabel,
-  Heading,
-  Input,
   Select,
-  Text,
+  Stack,
   Textarea,
-  VStack,
-  HStack,
-  Image,
+  useToast,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  useToast,
   Divider,
+  Grid,
+  GridItem,
+  VStack,
+  HStack,
+  Icon
 } from "@chakra-ui/react";
-import apiClient from "../../utils/apiClient";
 
+// Import components dynamically to avoid SSR issues
+const NavBar = dynamic(() => import("../../components/NavBar/NavBar"), { ssr: false });
+
+// Create a simplified campaign form page that works with our API
 const CampaignFormPage = () => {
   const router = useRouter();
   const toast = useToast();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  
-  // Form state
+  const [isLoading, setIsLoading] = useState(false);
   const [campaignName, setCampaignName] = useState("");
-  const [campaignObjective, setCampaignObjective] = useState("");
+  const [campaignObjective, setCampaignObjective] = useState("WEBSITE_CONVERSIONS");
   const [campaignType, setCampaignType] = useState("");
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [budget, setBudget] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [targetAudience, setTargetAudience] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  useEffect(() => {
+    // Check if user is authenticated
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      router.push("/accounts/login");
+    }
+  }, [router]);
   
   useEffect(() => {
     // Check if user is authenticated
@@ -159,7 +175,7 @@ const CampaignFormPage = () => {
         <Container maxW="container.xl">
           <Flex justify="space-between" align="center">
             <Link href="/">
-              <Image src="/assets/logo-header.png" alt="Logo" height="40px" />
+              <Box as="img" src="/assets/logo-header.png" alt="Logo" height="40px" />
             </Link>
             <Flex align="center">
               <Text mr={4}>Welcome, User</Text>
@@ -185,7 +201,7 @@ const CampaignFormPage = () => {
         <Box bg="white" borderRadius="md" boxShadow="md" p={8}>
           <Flex align="center" mb={6}>
             <Link href="/main">
-              <Button leftIcon={<Image src="/assets/Vector4.png" alt="Go Back" width="16px" height="16px" />} variant="ghost">
+              <Button variant="ghost">
                 Back
               </Button>
             </Link>
@@ -200,28 +216,28 @@ const CampaignFormPage = () => {
           
           {/* Tutorial Video */}
           <Box mb={8} borderRadius="md" overflow="hidden">
-            <video
+            <Box
+              as="video"
               controls
               poster="/assets/poster1.jpg"
-              style={{ width: '100%', maxHeight: '400px' }}
-            >
-              <source src="https://quickcampaignvideos.s3.us-east-1.amazonaws.com/how-to-video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+              width="100%"
+              maxHeight="400px"
+              src="https://quickcampaignvideos.s3.us-east-1.amazonaws.com/how-to-video.mp4"
+            />
           </Box>
           
           <form id="campaignForm" onSubmit={handleSubmit}>
             <Accordion allowToggle defaultIndex={[0]} mb={8}>
               {/* Creative Upload Section */}
               <AccordionItem>
-                <h2>
+                <Box as="h2">
                   <AccordionButton py={4}>
                     <Box flex="1" textAlign="left" fontWeight="bold">
                       Creative Uploading {uploadedFiles.length > 0 && `(${uploadedFiles.length} files uploaded)`}
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
-                </h2>
+                </Box>
                 <AccordionPanel pb={4}>
                   <Box 
                     border="2px dashed" 
@@ -233,7 +249,8 @@ const CampaignFormPage = () => {
                     onClick={handleFileUploadClick}
                     _hover={{ bg: "gray.50" }}
                   >
-                    <Image 
+                    <Box 
+                      as="img"
                       src="/assets/Vector6.png" 
                       alt="Upload" 
                       width="48px" 
@@ -257,14 +274,14 @@ const CampaignFormPage = () => {
               
               {/* Campaign Settings */}
               <AccordionItem>
-                <h2>
+                <Box as="h2">
                   <AccordionButton py={4}>
                     <Box flex="1" textAlign="left" fontWeight="bold">
                       Campaign Settings
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
-                </h2>
+                </Box>
                 <AccordionPanel pb={4}>
                   <VStack spacing={6} align="stretch">
                     <FormControl isRequired>
@@ -313,14 +330,14 @@ const CampaignFormPage = () => {
               
               {/* Audience Targeting */}
               <AccordionItem>
-                <h2>
+                <Box as="h2">
                   <AccordionButton py={4}>
                     <Box flex="1" textAlign="left" fontWeight="bold">
                       Audience Targeting
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
-                </h2>
+                </Box>
                 <AccordionPanel pb={4}>
                   <VStack spacing={6} align="stretch">
                     <FormControl isRequired>
