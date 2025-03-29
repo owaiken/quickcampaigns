@@ -16,6 +16,7 @@ from .models import FacebookAdAccount
 logger = logging.getLogger(__name__)
 
 @api_view(['GET'])
+@permission_classes([])
 def facebook_login(request):
     """
     Redirect the user to Facebook OAuth login page
@@ -36,6 +37,7 @@ def facebook_login(request):
     return HttpResponseRedirect(auth_url)
 
 @api_view(['GET'])
+@permission_classes([])
 def facebook_callback(request):
     """
     Handle the callback from Facebook OAuth
@@ -149,6 +151,7 @@ def facebook_callback(request):
         )
 
 @api_view(['GET'])
+@permission_classes([])
 def facebook_accounts(request):
     """
     Get the user's connected Facebook ad accounts
@@ -173,6 +176,7 @@ def facebook_accounts(request):
     return Response(result)
 
 @api_view(['DELETE'])
+@permission_classes([])
 def disconnect_facebook(request, account_id):
     """
     Disconnect a Facebook ad account
