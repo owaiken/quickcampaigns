@@ -34,7 +34,7 @@ const SetupAdAccountPopup = ({ onClose, onComplete, activeAccount, setActiveAcco
     const checkFacebookAccounts = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("https://quickcampaigns.onrender.com/api/auth/facebook/accounts/");
+        const response = await fetch("https://quickcampaigns.onrender.com/api/campaigns/auth/facebook/accounts/");
         if (response.ok) {
           const data = await response.json();
           setAdAccounts(data);
@@ -79,7 +79,7 @@ const SetupAdAccountPopup = ({ onClose, onComplete, activeAccount, setActiveAcco
     setIsConnecting(true);
     // Use the full backend URL for the Facebook login endpoint
     const apiUrl = "https://quickcampaigns.onrender.com";
-    window.location.href = `${apiUrl}/api/auth/facebook/login/`;
+    window.location.href = `${apiUrl}/api/campaigns/auth/facebook/login/`;
   };
 
   const handleSubmit = () => {
