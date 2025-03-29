@@ -25,9 +25,17 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import apiClient from "../../utils/apiClient";
+import { campaignAPI } from "../../utils/api";
 
-// Mock data for existing campaigns
-const mockCampaigns = [
+// Define campaign interface
+interface Campaign {
+  id: string;
+  name: string;
+  [key: string]: any; // Allow for additional properties
+}
+
+// Fallback mock data in case API fails
+const mockCampaigns: Campaign[] = [
   { id: "1", name: "findproccesserror" },
   { id: "2", name: "LIVE APP" },
   { id: "3", name: "instagram screencast" },
@@ -40,7 +48,7 @@ const MainPage = () => {
   
   const [selectedObjective, setSelectedObjective] = useState("website");
   const [campaignType, setCampaignType] = useState("new");
-  const [existingCampaigns, setExistingCampaigns] = useState(mockCampaigns);
+  const [existingCampaigns, setExistingCampaigns] = useState<Campaign[]>([]);
   const [selectedCampaign, setSelectedCampaign] = useState("");
   const [activeAccount, setActiveAccount] = useState({ id: "default", is_bound: false });
 
@@ -49,14 +57,37 @@ const MainPage = () => {
     const token = localStorage.getItem("access_token");
     if (!token) {
       router.push("/accounts/login");
+      return;
     }
     
-    // If campaign type is changed to existing, load campaigns
-    if (campaignType === "existing") {
-      // In a real app, you would fetch campaigns from the API
+    // Fetch user's campaigns from the API
+    fetchUserCampaigns();
+  }, [router]);
+  
+  const fetchUserCampaigns = async () => {
+    try {
+      const response = await campaignAPI.getCampaigns();
+      if (response.data && Array.isArray(response.data)) {
+        setExistingCampaigns(response.data);
+      } else {
+        // If API returns unexpected format, use mock data for demo
+        console.warn('API returned unexpected format, using mock data');
+        setExistingCampaigns(mockCampaigns);
+      }
+    } catch (error) {
+      console.error('Error fetching campaigns:', error);
+      // Use mock data as fallback
       setExistingCampaigns(mockCampaigns);
+      
+      toast({
+        title: "Could not fetch campaigns",
+        description: "Using demo data instead",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
-  }, [campaignType, router]);
+  };
 
   const handleObjectiveSelect = (objective: string) => {
     setSelectedObjective(objective);
