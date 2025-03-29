@@ -60,8 +60,12 @@ const RegisterPage = () => {
     validateField(e.target.name, e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError("");
     
     // Check all fields before submission
     Object.keys(formData).forEach((key) => {
@@ -72,7 +76,36 @@ const RegisterPage = () => {
 
     // Check if there are any errors
     if (Object.values(errors).every((error) => error === "")) {
-      console.log("Form Data Submitted:", formData);
+      try {
+        setIsSubmitting(true);
+        
+        // Send registration data to backend
+        const response = await fetch("https://quickcampaigns.onrender.com/api/auth/register/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.name,
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        if (response.ok) {
+          // Registration successful, redirect to login page
+          window.location.href = "/accounts/login";
+        } else {
+          // Handle error response
+          const errorData = await response.json();
+          setSubmitError(errorData.detail || "Registration failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Registration error:", error);
+        setSubmitError("An error occurred during registration. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       console.log("Form has errors:", errors);
     }
@@ -168,9 +201,12 @@ const RegisterPage = () => {
             onChange={(value) => setFormData((prev) => ({ ...prev, recaptcha: value }))}
           /> */}
 
+          {/* Error Message */}
+          {submitError && <p className="error">{submitError}</p>}
+
           {/* Submit Button */}
-          <button type="submit" className="option-button">
-            Finish
+          <button type="submit" className="option-button" disabled={isSubmitting}>
+            {isSubmitting ? "Processing..." : "Finish"}
           </button>
         </form>
       </div>
