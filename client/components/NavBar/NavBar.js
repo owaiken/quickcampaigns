@@ -65,6 +65,12 @@ const Navbar = ({ activeAccount, setActiveAccount, refreshTrigger }) => {
               >
                 Manage Subscription
               </div>
+              <div
+                className="dropdown-item"
+                onClick={() => handleOptionClick("/credits")}
+              >
+                Purchase Credits
+              </div>
               <Link href="/" className="forlink">
                 <div className="dropdown-item" onClick={handleLogout}>
                   Log Out
