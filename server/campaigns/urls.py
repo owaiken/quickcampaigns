@@ -21,8 +21,8 @@ urlpatterns = [
     path('', include(campaigns_router.urls)),
     
     # Facebook OAuth endpoints
-    path('auth/facebook/login/', facebook_login, name='facebook-login'),
-    path('auth/facebook/callback/', facebook_callback, name='facebook-callback'),
-    path('auth/facebook/accounts/', facebook_accounts, name='facebook-accounts'),
-    path('auth/facebook/disconnect/<int:account_id>/', disconnect_facebook, name='facebook-disconnect'),
+    path('campaigns/auth/facebook/login/', facebook_login, name='facebook-login'),
+    path('campaigns/auth/facebook/callback/', facebook_callback, name='facebook-callback'),
+    path('campaigns/auth/facebook/accounts/', facebook_accounts, name='facebook-accounts'),
+    path('campaigns/auth/facebook/disconnect/<int:account_id>/', disconnect_facebook, name='facebook-disconnect'),
 ]
