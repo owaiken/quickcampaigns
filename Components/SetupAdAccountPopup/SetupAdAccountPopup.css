@@ -1,5 +1,55 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+/* Facebook Connect Button Styles */
+.facebook-connect-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.facebook-connect-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.facebook-connect-button:hover {
+  background-color: #166fe5;
+}
+
+.facebook-connect-button:disabled {
+  background-color: #9cb4d8;
+  cursor: not-allowed;
+}
+
+.facebook-icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-size: 16px;
+  color: #666;
+}
+
 .popupOverlay {
     position: fixed;
     top: 0;

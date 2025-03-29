@@ -11,6 +11,12 @@ import '/public/Styles/fonts.css'
 import Link from "next/link";
 import Image from "next/image";
 
+// Import Facebook Connect Button dynamically to avoid SSR issues
+const FacebookConnectButton = dynamic(
+  () => import("@/Components/FacebookConnect/FacebookConnectButton"),
+  { ssr: false }
+);
+
 const ConfigForm = dynamic(
   () => import("@/Components/CampaignFormComp/CampaignFormComp"),
   { ssr: false }
@@ -29,6 +35,8 @@ const CampaignForm = ({
   const [campaignName, setCampaignName] = useState("");
   const [campaignId, setCampaignId] = useState(initialCampaignId || "");
   const [savedConfig, setSavedConfig] = useState(initialConfig);
+  const [hasFacebookAccount, setHasFacebookAccount] = useState(false);
+  const [checkingFacebookAccount, setCheckingFacebookAccount] = useState(true);
   const [expandedSections, setExpandedSections] = useState({
     creativeUploading: true,
   });
@@ -53,6 +61,11 @@ const CampaignForm = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
+    if (!hasFacebookAccount) {
+      toast.error("Please connect your Facebook ad account first.");
+      return;
+    }
 
     if (uploadedFiles.length === 0) {
       toast.error("Please Upload Your Creatives.");
@@ -125,6 +138,18 @@ const CampaignForm = ({
         <p className={styles.subtitle}>
           Fill In The Required Fields To Generate And Launch Your Meta Ads
         </p>
+        
+        {!hasFacebookAccount && (
+          <div className={styles.facebookConnectContainer}>
+            <div className={styles.facebookConnectMessage}>
+              <h3>Connect Your Facebook Ad Account</h3>
+              <p>You need to connect your Facebook ad account to create campaigns</p>
+              <FacebookConnectButton 
+                onConnected={(connected) => setHasFacebookAccount(connected)} 
+              />
+            </div>
+          </div>
+        )}
 
         <div className={styles.tutorialVideo}>
           <video

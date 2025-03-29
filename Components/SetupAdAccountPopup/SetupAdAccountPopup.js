@@ -3,16 +3,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import "./SetupAdAccountPopup.css";
+import { FaFacebook } from "react-icons/fa";
 
 const SetupAdAccountPopup = ({ onClose, onComplete, activeAccount, setActiveAccount }) => {
-  const [adAccounts] = useState([
-    { id: "act_001", name: "Ad Account 1" },
-    { id: "act_002", name: "Ad Account 2" },
-    { id: "act_003", name: "Ad Account 3" },
-  ]);
+  const [adAccounts, setAdAccounts] = useState([]);
   const [selectedAdAccount, setSelectedAdAccount] = useState("");
   const [selectedAdAccountName, setSelectedAdAccountName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const popupRef = useRef(null);
 
@@ -28,6 +28,41 @@ const SetupAdAccountPopup = ({ onClose, onComplete, activeAccount, setActiveAcco
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
+  
+  // Check if user has connected Facebook accounts
+  useEffect(() => {
+    const checkFacebookAccounts = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("https://quickcampaigns.onrender.com/api/campaigns/auth/facebook/accounts/");
+        if (response.ok) {
+          const data = await response.json();
+          setAdAccounts(data);
+          setIsConnected(data.length > 0);
+          
+          // If there's an active account, select it
+          if (activeAccount) {
+            const account = data.find(acc => acc.account_id === activeAccount);
+            if (account) {
+              setSelectedAdAccount(account.account_id);
+              setSelectedAdAccountName(account.name);
+            }
+          } else if (data.length > 0) {
+            // Select the first account by default
+            setSelectedAdAccount(data[0].account_id);
+            setSelectedAdAccountName(data[0].name);
+          }
+        }
+      } catch (error) {
+        console.error("Error checking Facebook accounts:", error);
+        toast.error("Failed to fetch Facebook ad accounts");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    checkFacebookAccounts();
+  }, [activeAccount]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
