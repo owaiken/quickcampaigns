@@ -84,7 +84,7 @@ const LoginPage = () => {
                 const response = await axios.post(
                     apiUrl, 
                     {
-                        username: formData.email,
+                        email: formData.email,
                         password: formData.password
                     }
                 );
