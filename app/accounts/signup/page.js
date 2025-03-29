@@ -79,8 +79,8 @@ const RegisterPage = () => {
       try {
         setIsSubmitting(true);
         
-        // Send registration data to backend
-        const response = await fetch("https://quickcampaigns.onrender.com/api/auth/register/", {
+        // Send registration data to backend using Djoser endpoint
+        const response = await fetch("https://quickcampaigns.onrender.com/auth/users/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -89,6 +89,7 @@ const RegisterPage = () => {
             username: formData.name,
             email: formData.email,
             password: formData.password,
+            re_password: formData.confirmPassword, // Djoser requires password confirmation
           }),
         });
 
@@ -98,7 +99,18 @@ const RegisterPage = () => {
         } else {
           // Handle error response
           const errorData = await response.json();
-          setSubmitError(errorData.detail || "Registration failed. Please try again.");
+          let errorMessage = "Registration failed. Please try again.";
+          
+          // Format error messages from Djoser
+          if (errorData) {
+            const errorKeys = Object.keys(errorData);
+            if (errorKeys.length > 0) {
+              const firstError = errorData[errorKeys[0]];
+              errorMessage = Array.isArray(firstError) ? firstError[0] : firstError;
+            }
+          }
+          
+          setSubmitError(errorMessage);
         }
       } catch (error) {
         console.error("Registration error:", error);
