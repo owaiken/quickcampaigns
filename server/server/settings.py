@@ -143,7 +143,17 @@ USE_L10N = True
 
 USE_TZ = True
 
-CORS_ALLOW_ALL_ORIGINS = True
+# Instead of allowing all origins, specify allowed origins for security
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# Specify allowed origins
+CORS_ALLOWED_ORIGINS = [
+    "https://quickcampaigns.vercel.app",
+    "http://localhost:3000",  # For local development
+]
+
+# Allow credentials (cookies, authorization headers)
+CORS_ALLOW_CREDENTIALS = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
