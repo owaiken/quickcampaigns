@@ -210,7 +210,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("Token",),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 # Stripe Configuration
